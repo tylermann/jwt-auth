@@ -42,10 +42,10 @@ class GetUserFromToken extends BaseMiddleware
         }
 
         // the Dispatcher::fire method was removed in Laravel 5.8 https://laravel.com/docs/5.8/upgrade#events
-        if (method_exists($this->events, 'fire')) {
-            $this->events->fire('tymon.jwt.valid', $user);
-        } else {
+        if (method_exists($this->events, 'dispatch')) {
             $this->events->dispatch('tymon.jwt.valid', $user);
+        } else {
+            $this->events->fire('tymon.jwt.valid', $user);
         }
 
 
